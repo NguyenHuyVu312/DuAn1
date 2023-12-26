@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width">
+</head>
+
+<body>
+	<main>
+		<div class="scroll-bar">
+			<div id="SeatFood" class="container col-9">
+				<div id="headMenu">
+					<div class="mx-auto text-center">
+						<h1 class="fw-bolder text-white mb-3">Đặt vé</h1>
+					</div>
+					<div id="hh"
+						style="background-color: red; color: white; padding: 10px; border-radius: 10px; margin-bottom: 5px;"
+						class="d-flex">
+						<div>
+						<span id="mapc" style="display:none;" th:utext="${itemCt.room.Mapc}"></span>
+							<span>Universe Cinema |</span> <span
+								th:utext="${itemCt.room.Tenpc} + ' |'"></span> <span
+								id="TotalSeat2"></span><br>
+							<div style="display: inline-block;">
+								Giờ bắt đầu <span id="GioBatDau"
+									th:utext="${itemL.getFormattedGiobatdau}"></span>
+							</div>
+							<div style="display: inline-block;">
+								Giờ kết thúc <span id="GioKetThuc"
+									th:utext="${itemL.getFormattedGioketthuc}"></span>
+							</div>
+						</div>
+						<span class="ml-auto" id="countdown">Count Down: 00:00</span>
+					</div>
+
+				</div>
+				<!-- page Seat -->
+				<div id="displaySeat">
+					<div class="card text-center">
+						<div class="card-header">
+							<div class="movie-title h5 mt-3" th:utext="${itemCt.Tenphim}"></div>
+						</div>
+						<div class="card-body">
+							<div class="seat-map">
+							<div class="text-center" style="display: none;"><button id="lockButton" class="btn btn-outline-primary">LOCK/UNLOCK</button></div>
+								<div class="screen"></div>
+								<div class="seats">
+									<div th:each="ghe: ${listGhe}">
+										<!-- Dùng vòng lặp để tạo danh sách ghế -->
+										<div class="seat" id="seats"
+											th:attr="data-row=${ghe.hang}, data-col=${ghe.cot}, data-name=${ghe.tenghe}, data-id=${ghe.maghe}"
+											th:classappend="${ghe.loaighe.maloai == 'R'} ? 'seat' : (${ghe.loaighe.maloai == 'V'} ? 'vip' : 'couple')">
+											<div class="mt-2 pt-2" th:utext="${ghe.tenghe}"
+											th:classappend="${ghe.trangthai}"></div>
+										</div>
+										<!-- Kết thúc vòng lặp -->
+									</div>
+								</div>
+								<ul class="showcase mt-4">
+									<li>
+										<div class="commentSeat"></div> <small>Ghế Thường</small>
+									</li>
+									<li>
+										<div class="commentSeat selected"></div> <small>Đã
+											Chọn</small>
+									</li>
+									<li>
+									<li>
+										<div class="commentSeat sold"></div> <small>Đã Đặt</small>
+									</li>
+									<li>
+										<div class="commentSeat vip"></div> <small>VIP</small>
+									</li>
+									<li>
+										<div class="commentSeat couple"></div> <small>Ghê Đôi</small>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- page Food -->
+				<div id="displayFood" class="m-auto mt-3"
+					style="box-shadow: 0px 0px 5px 1px black;">
+					<h4 id="cartItems"></h4>
+					<div class="food-list">
+						<div th:each="c:${itemComBo}" class="col-sm-6 d-flex p-4"
+							style="position: relative;">
+							<img
+								style="max-width: 150px; max-height: 200px; background: none;"
+								th:src="@{|/assets/combo/${c.Hinh}|}" alt="Đồ ăn">
+							<div class="" style="text-align: left;">
+								<h5 th:utext="${c.Mota}">JUNGLE BROWN MY COMBO</h5>
+								<p>
+									1 bình Jungle Brown + 1 nước siêu lớn <br> **Mua thêm 1
+									bắp ngọt chỉ với 29K tại rạp <br> **Nhận trong ngày xem
+									phim** <br> ***Mẫu ly phụ thuộc vào số lượng hàng tại rạp
+								</p>
+								<div class="price" style="margin-bottom: 50px;"
+									th:text="'Giá: ' + ${c.Dongia} + ' VND'">Giá:</div>
+								<div class="quantity-input"
+									style="position: absolute; bottom: 1px;">
+									<button class="decrease-quantity"
+										style="width: 25px; height: 30px; border: none; background-color: red;">-</button>
+									<input style="margin: 5px;" type="number" class="quantity"
+										value="0" readonly>
+									<button
+										style="width: 25px; height: 30px; border: none; background-color: red;"
+										class="increase-quantity">+</button>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-sm-6 d-flex p-4" style="position:relative;">
+							<img style="max-width: 150px; max-height:200px;"
+								src="https://www.cgv.vn/media/concession/web/6426a4fc4b1ca_1680254204.png" alt="Đồ ăn">
+							<div class="" style="text-align: left;">
+								<h5>JUNGLE BROWN COUPL</h5>
+								<p>
+									2 bình Jungle Brown + 2 nước siêu lớn + 1 bắp ngọt lớn <br>
+									**Nhận trong ngày xem phim** <br> ***Mẫu ly phụ thuộc vào
+									số lượng hàng tại rạp <br>
+								</p>
+								<div class="price"  style="margin-bottom:50px;">Giá: $15</div>
+								<div class="quantity-input" style="position:absolute; bottom:0px;">
+									<button style="width: 25px; height: 30px; border: none; background-color: red;"
+										class="decrease-quantity">-</button>
+									<input style="margin: 5px;" type="number" class="quantity" value="0" readonly>
+									<button style="width: 25px; height: 30px; border: none; background-color: red;"
+										class="increase-quantity">+</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 d-flex p-4" style="position:relative;">
+							<img style="max-width: 150px;max-height:200px;"
+								src="https://www.cgv.vn/media/concession/web/64d0e5082f836_1691411720.png" alt="Đồ ăn">
+							<div class="p-3" style="text-align: left;">
+								<h5>MILO COMBO 2023</h5>
+								<p>
+									1 milo lớn + 1 nước ngọt siêu lớn + 1 bắp ngọt lớn <br> *
+									Nhận trong ngày xem phim.<br> ** Miễn phí đổi vị bắp
+									Caramel<br> *** Đổi vị phô mai phụ thu thêm tiền <br>
+								</p>
+								<div class="price"  style="margin-bottom:50px;">Giá: $20</div>
+								<div class="quantity-input" style="position:absolute; bottom:0px;">
+									<button style="width: 25px; height: 30px; border: none; background-color: red;"
+										class="decrease-quantity">-</button>
+									<input style="margin: 5px;" type="number" class="quantity" value="0" readonly>
+									<button style="width: 25px; height: 30px; border: none; background-color: red;"
+										class="increase-quantity">+</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 d-flex p-4" style="position:relative;">
+							<img style="max-width: 150px; max-height:200px;"
+								src="https://www.cgv.vn/media/concession/web/64d315fa964c0_1691555323.png" alt="Đồ ăn">
+							<div class="p-3" style="text-align: left;">
+								<h5>BLUE BEETLE SCARAB W</h5>
+								<p>
+									1 ly Blue Beetle nắp cánh + 1 nước ngọt siêu lớn + 1 bắp lớn<br>
+									*Nhận trong ngày xem phim<br>
+								</p>
+								<div class="price" style="margin-bottom:50px;">Giá: $30</div>
+								<div class="quantity-input" style="position:absolute; bottom:0px;">
+									<button style="width: 25px; height: 30px; border: none; background-color: red;"
+										class="decrease-quantity">-</button>
+									<input style="margin: 5px;" type="number" class="quantity" value="0" readonly>
+									<button style="width: 25px; height: 30px; border: none; background-color: red;"
+										class="increase-quantity">+</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 d-flex p-4" style="position:relative;">
+							<img style="max-width: 150px; max-height:200px;"
+								src="https://www.cgv.vn/media/concession/web/64e0cd409b54d_1692454209.png" alt="Đồ ăn">
+							<div class="p-3" style="text-align: left;">
+								<h5>PEANUTS COUPLE COME</h5>
+								<p>
+									02 ly nhân vật Peanuts (kèm nước)<br> * Nhận ngay trong
+									ngày xem phim<br> ** Thêm 39,000đ nhận ngay 1 bắp ngọt<br>
+									*** Mẫu ly phụ thuộc vào số lượng của rạp<br>
+								</p>
+								<div class="price"  style="margin-bottom:50px;">Giá: $40</div>
+								<div class="quantity-input" style="position:absolute; bottom:0px;">
+									<button style="width: 25px; height: 30px; border: none; background-color: red;"
+										class="decrease-quantity">-</button>
+									<input style="margin: 5px;" type="number" class="quantity" value="0" readonly>
+									<button style="width: 25px; height: 30px; border: none; background-color: red;"
+										class="increase-quantity">+</button>
+								</div>
+							</div>
+						</div> -->
+					</div>
+					<div class="cart">
+						<ul id="cartItems"></ul>
+					</div>
+				</div>
+
+				<div class="row p-0 m-0" style="color: red;">
+
+					<!-- page Pay -->
+					<div id="displayPay" class="m-auto">
+						<!-- <div>
+							<h5>Thông Tin Phim</h5>
+							<div></div>
+						</div> -->
+						<div class="row p-0 m-0"
+							style="position: relative; border: 1px solid black; border-radius: 10px; box-shadow: 0px 0px 5px 1px black;">
+							<div class="col-8">
+								<div
+									style="color: white; text-align: left; padding: 5px; font-weight: 600;">
+									<span style="display: inline-block;">Bước 1:</span> <span
+										style="display: inline-block;">GIẢM GIÁ</span>
+								</div>
+								<div class="m-2">
+									<div>
+										<div style="background: white; border-radius: 5px;">
+											<span
+												style="font-size: 18px; color: black; margin-left: 10px;">Mã
+												khuyến mãi</span>
+											<div class="collapse p-2 d-flex">
+												<input id="khuyenMaiInput" class="form-control"
+													placeholder="Nhập mã khuyến mãi">
+												<button class="btn btn-primary ml-2" onClick="khuyenMai()">Submit</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div
+									style="color: white; text-align: left; padding: 5px; font-weight: 600;">
+									<span style="display: inline-block;">Bước 2:</span> <span
+										style="display: inline-block;">HÌNH THỨC THANH TOÁN</span>
+								</div>
+								<div>
+									<div class="form-check m-2"
+										style="text-align: left; color: #00ffff;">
+										<input class="form-check-input mt-3" type="radio"
+											name="flexRadioDefault" value="atm" id="flexRadioDefault1"> <label
+											class="form-check-label" for="flexRadioDefault1">
+											<div style="display: inline-block; width: 50px;">
+												<img style="max-width: 40px;"
+													src="https://www.cgv.vn/media/catalog/product/placeholder/default/atm_icon.png"
+													alt="">
+											</div> ATM card (Thẻ nội địa)
+										</label>
+									</div>
+									<div class="form-check m-2"
+										style="text-align: left; color: #00ffff;">
+										<input class="form-check-input mt-3" type="radio"
+											name="flexRadioDefault" value="thequocte" id="flexRadioDefault2"> <label
+											class="form-check-label" for="flexRadioDefault2">
+											<div style="display: inline-block; width: 50px;">
+												<img style="max-width: 40px;"
+													src="https://www.cgv.vn/media/catalog/product/placeholder/default/visa-mastercard-icon.png"
+													alt="">
+											</div> Thẻ quốc tế (Visa, Master, Amex, JCB) (Thẻ nội địa)
+										</label>
+									</div>
+									<div class="form-check m-2"
+										style="text-align: left; color: #00ffff;">
+										<input class="form-check-input mt-3" type="radio"
+											name="flexRadioDefault" value="momo" id="flexRadioDefault3"> <label
+											class="form-check-label" for="flexRadioDefault3">
+											<div style="display: inline-block; width: 50px;">
+												<img style="max-width: 40px;"
+													src="https://www.cgv.vn/media/catalog/product/placeholder/default/momo_icon.png"
+													alt="">
+											</div> MoMo - Nhập MMCGV -5K/bill, Vé 9K Bạn Mới
+										</label>
+									</div>
+									<div class="form-check m-2"
+										style="text-align: left; color: #00ffff;">
+										<input class="form-check-input mt-3" type="radio"
+											name="flexRadioDefault" value="zalopay" id="flexRadioDefault4"> <label
+											class="form-check-label" for="flexRadioDefault4">
+											<div style="display: inline-block; width: 50px;">
+												<img style="max-width: 40px;"
+													src="https://www.cgv.vn/media/catalog/product/placeholder/default/icon-HOT-96x96.png"
+													alt="">
+											</div> ZaloPay: Bạn Mới vé 14K - Bạn Thân 84K
+										</label>
+									</div>
+									<div class="form-check m-2"
+										style="text-align: left; color: #00ffff;">
+										<input class="form-check-input mt-3" type="radio"
+											name="flexRadioDefault" value="vnpay" id="flexRadioDefault5"> <label
+											class="form-check-label" for="flexRadioDefault5">
+											<div style="display: inline-block; width: 50px;">
+												<img style="max-width: 40px;"
+													src="https://www.cgv.vn/media/catalog/product/placeholder/default/vnpay_newlogo.png"
+													alt="">
+											</div> VNPAY
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-4" style="padding: 5px;">
+								<div
+									style="background: #162953; color: white; display: flex; flex-direction: column; border-radius: 5px; padding: 10px 5px 10px 5px;">
+									<div style="margin-bottom: 10px;">
+										<span style="font-size: 15px; font-weight: 700;">Thông
+											tin phim</span>
+										<div>
+											<div id="lichSTT" style="display:none; width: 50%;" th:utext="${itemL.Stt}"></div>
+											<div
+												style="display: flex; flex-direction: row; margin-bottom: 5px;">
+												<div style="width: 50%;">Phim:</div>
+												<div id="nameFlimPay" style="width: 50%;"></div>
+											</div>
+											<div
+												style="display: flex; flex-direction: row; margin-bottom: 5px;">
+												<div style="width: 50%;">Giờ Chiếu:</div>
+												<div id="suatChieuPay" style="width: 50%;"></div>
+											</div>
+
+											<div
+												style="display: flex; flex-direction: row; margin-bottom: 5px;">
+												<div style="width: 50%;">Ngày Chiếu:</div>
+												<div id="ngayChieuPay" style="width: 50%;"></div>
+											</div>
+											<div
+												style="display: flex; flex-direction: row; margin-bottom: 5px;">
+												<div style="width: 50%;">Ghế:</div>
+												<div id="viTriGhePay" style="width: 50%;"></div>
+											</div>
+											<div
+												style="display: flex; flex-direction: row; margin-bottom: 5px;">
+												<div style="width: 50%;">Phòng chiếu:</div>
+												<div id="roomPay" style="width: 50%;"></div>
+											</div>
+										</div>
+									</div>
+									<hr>
+									<div style="margin-bottom: 10px;">
+										<span style="font-size: 15px; font-weight: 700;">Đồ ăn</span>
+										<div>
+											<div
+												style="display: flex; flex-direction: row; margin-bottom: 5px;">
+												<div style="width: 50%;">Đồ ăn:</div>
+												<div id="Food" style="width: 50%;"></div>
+											</div>
+											<div
+												style="display: flex; flex-direction: row; margin-bottom: 5px;">
+												<div style="width: 50%;">Tổng:</div>
+												<div id="totalPriceFood" style="width: 50%;"></div>
+											</div>
+										</div>
+									</div>
+									<hr>
+									<div style="display: flex; flex-direction: column;">
+									<span id="maKhuyenMai" style="display:none;"></span>
+									<span id="giamGia" style="display:none;"></span>
+									<span id="dateShow" style="display:none;" th:utext="${itemL.ngaychieu}"></span>
+									<span id="timeShow" style="display:none;" th:utext="${itemL.giobatdau}"></span>
+									<span id="toTalPayNoFormat" style="display:none;"></span>
+									<span id="toTalPayNoFormat1" style="display:none;"></span>
+										<span id="khuyenMai" 
+											style="margin-bottom: 10px; font-size: 15px; font-weight: 700;">Khuyến
+											mãi: $0.00</span> <span id="toTalPay"
+											style="margin-bottom: 10px; font-size: 15px; font-weight: 700;">Tổng
+											thanh toán: $0.00</span> <span id="toTalPay2"
+											style="margin-bottom: 10px; font-size: 15px; font-weight: 700;">Thành
+											Tiền: $0.00</span>
+									</div>
+									<div class="d-flex">
+										<button onClick="getSelectedRadioValue()"
+											class="btn btn-primary w-50">Thanh Toán</button>
+										<button id="backButton" class="btn btn-danger w-50">Quay
+											Lại</button>
+									</div>
+								</div>
+							</div>
+							<div class="m-2"
+								style="width: 200px; text-align: center; position: absolute; left: 40%; bottom: 0px; right: 60px;">
+								<div style="color: white; font-weight: 700;">Đếm ngược</div>
+								<div style="color: white;" id="countdown2">00:00</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div id="DieuHuong" class="row p-0 m-0"
+					style="color: red; background-color: black;">
+					<div class="col-2">
+						<button id="prevButton"
+							style="margin-top: 20px; width: 104px; height: 85px; background-color: #343433;"
+							class="btn btn-danger">
+							<i class="fa-solid fa-arrow-left fa-2xl"></i>Previous
+						</button>
+					</div>
+					<div class="col-1">
+						<img style="width: 70px; margin-top: 10px;" id="imageMovie"
+							th:src="@{|/assets/Images/${itemCt.Hinh}|}"
+							th:alt="${itemCt.Hinh}">
+					</div>
+					<div class="col-2" style="margin-top: 10px;">
+						<p id="nameFilm" style="text-align: left; margin-top: 5px;"
+							th:utext="${itemCt.Tenphim}">Tên Phim</p>
+					</div>
+					<div style="margin-top: 10px;" class="col-3">
+						<div class="row">
+							<p class="col-4 m-0 p-0">Rạp</p>
+							<p id="cinema" class="col-8 m-0 p-0">Universe Cinema</p>
+						</div>
+						<div class="row">
+							<p class="col-4 m-0 p-0">Suất chiếu</p>
+							<p id="suatChieu" class="col-8 m-0 p-0"
+								th:utext="${itemL.getFormattedGiobatdau}"></p>
+						</div>
+						<div class="row">
+							<p class="col-4 m-0 p-0">Ngày chiếu</p>
+							<p id="ngayChieu" class="col-8 m-0 p-0"
+								th:utext="${itemL.getFormattedNgaychieu}"></p>
+						</div>
+						<div class="row">
+							<p class="col-4 m-0 p-0">Phòng chiếu</p>
+							<p id="room" class="col-8 m-0 p-0"
+								th:utext="${itemCt.room.Tenpc}"></p>
+						</div>
+						<div class="row">
+							<p class="col-4 m-0 p-0">Ghế</p>
+							<p class="col-8 m-0 p-0" id="selected-seats"></p>
+						</div>
+					</div>
+					<div style="margin-top: 10px;" class="col-2">
+						<div class="row">
+							<p class="col-4 m-0 p-0">Tổng ghế</p>
+							<p class="col-8 m-0 p-0" id="countSeat">0</p>
+						</div>
+						<div class="row">
+							<p class="col-4 m-0 p-0">Combo</p>
+							<p id="combo" class="col-8 m-0 p-0">0 VND</p>
+						</div>
+						<div class="row">
+							<p class="col-4 m-0 p-0">Tổng</p>
+							<p class="col-8 m-0 p-0" id="total-price">0 VND</p>
+						</div>
+						<div class="row" style="display: none;">
+							<p class="col-4 m-0 p-0">Giá ghế</p>
+							<p class="col-8 m-0 p-0" id="seat-price">0 VND</p>
+						</div>
+					</div>
+					<br> <br> <br> <br> <br> <br>
+					<div class="col-2 text-center">
+						<button id="nextButton"
+							style="margin-top: 20px; width: 104px; height: 85px;"
+							class="btn btn-danger">
+							<i class="fa-solid fa-arrow-right fa-2xl"></i><br>Next
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
