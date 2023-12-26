@@ -1,0 +1,68 @@
+<nav xmlns:th="http://wwww.thymeleaf.org"
+	class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm">
+	<div class="container-fluid">
+		<a class="navbar-brand name-store fw-bolder"
+			th:href="@{/product/list}"><img src="/assets/banner/obu.jpg"
+			width="100px"><strong>OBOOKS STORE</strong></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class=" collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav ms-auto ">
+				<th:block th:if="${#request.remoteUser}">
+				<li class="nav-item"><a th:href="@{|/product/uploadsp/${#request.remoteUser}|}"
+						class="nav-link mx-2 text-uppercase menu">Sách của tôi</a></li>
+					<li class="nav-item"><a th:href="@{/order/list}"
+						class="nav-link mx-2 text-uppercase menu">Đơn hàng của tôi</a></li>
+					<li class="nav-item"
+						th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}">
+						<a th:href="@{/admin}" class="nav-link mx-2 text-uppercase menu">Quản
+							lí</a>
+					</li>
+					<li class="nav-item"><a th:href="@{/security/logoff}"
+						class="nav-link mx-2 text-uppercase menu">Đăng xuất</a></li>
+				</th:block>
+
+			</ul>
+			<ul class="navbar-nav ms-2">
+				<li class="nav-item"><a class="btn position-relative menu"
+					th:href="@{/cart/view}"> <i class="bi bi-cart3"
+						style="font-size: 20px;"></i><span
+						class="position-absolute top-0 start-50 badge rounded-pill bg-danger">
+							{{cart.count}}</span>
+				</a></li>
+				<th:block th:unless="${#request.remoteUser}">
+					<li class="nav-item ms-2"><a th:href="@{/security/login/form}"
+						class="nav-link mx-2 text-uppercase menu"><i
+							class="bi bi-person-circle me-2"></i>Đăng nhập</a></li>
+					<li class="nav-item me-5"><a
+						th:href="@{/security/register/form}"
+						class="nav-link me-5 text-uppercase menu">Đăng ký</a></li>
+				</th:block>
+			</ul>
+			<div th:if="${#request.remoteUser}" class="text-end">
+				<a class="nav-link mx-2 text-uppercase text-success fw-bolder">Welcome
+					[[${#request.remoteUser}]]</a>
+			</div>
+		</div>
+	</div>
+</nav>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$(".language").click(function () {
+			var url = $(this).prop("href");
+			console.log(url);
+			$.ajax({
+				url: url,
+			}).then(resp => {
+				location.reload();
+			});
+
+			return false;
+		})
+	})
+</script>

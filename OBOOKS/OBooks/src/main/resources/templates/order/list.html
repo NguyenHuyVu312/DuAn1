@@ -1,0 +1,46 @@
+<html xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/layout/index::dynamic(~{::main})}">
+	<main>
+		<div class="card border border-1  mt-3">
+			<div class="card-header bg-primary text-white text-center">
+				<h3 class="mt-2">Hóa đơn</h3>
+			</div>
+			
+			
+			
+ 
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="table table-white table-bordered mb-0">
+                <thead>
+                  <tr>
+                   <th>No.</th>
+						<th>Mã hóa đơn</th>
+						<th>Ngày tạo</th>
+						<th>Địa chỉ giao hàng</th>
+						<th></th>
+                  </tr>
+                </thead>
+             <tbody>
+					<tr th:each="order,state:${orders}">
+						<td>[[${state.index}]]</td>
+						<td>[[${order.id}]]</td>
+						<td>[[${#dates.format(order.createDate,'dd-MM-yyyy')}]]</td>
+						<td>[[${order.address}]]</td>
+						<td>
+							<a th:href="@{|/order/detail/${order.id}|}" class="btn btn-secondary">
+								<b><i class="fa-solid fa-magnifying-glass"></i></b>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    
+
+			
+		</div>
+	</main>
+</html>

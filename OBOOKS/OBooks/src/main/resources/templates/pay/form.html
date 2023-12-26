@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html th:xmlns="http://wwww.thymeleaf.org"
+	th:replace="~{/layout/index::dynamic(~{::main})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+	<main>
+		<!-- Overlay panel -->
+		<div class="body-overlay"></div>
+		<!-- Left panel -->
+		<div id="panel-left"></div>
+		<div class="page page--main" data-page="buy">
+			<!-- HEADER -->
+			<header class="header header--fixed">
+				<div class="header__inner"></div>
+			</header>
+			<!-- PAGE CONTENT -->
+			<div
+				class="page__content page__content--with-header page__content--with-bottom-nav">
+				<h2 class="page__title">Buy Solona</h2>
+				<div class="fieldset">
+					<div class="form">
+						<form id="Form" method="post">
+							<div class="form__row d-flex align-items-center justify-space">
+								<input type="text" name="Text" value=""
+									class="form__input form__input--15 border-bottom"
+									placeholder="0.05" />
+								<div class="form__coin-icon">
+									<img src="/assets/images/solana.png" alt="" title="" /><span>SOL</span>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<h2 class="page__title">Select Payment</h2>
+				<div class="fieldset">
+					<div class="radio-option radio-option--full">
+						<input type="radio" name="payment" id="op5" value="creditcard"
+							checked /><label for="op5">Credit Card</span></label>
+					</div>
+					<div class="option-hidden show" id="show-credit-cards">
+						<h4 class="pb-10">Existing Credit Cards</h4>
+						<div class="sub-fieldset">
+							<div class="card-selector text-white">
+								<input type="radio" name="excard" id="c1" value="1" /><label
+									for="c1">Visa Credit Card <span>xxxx 6589</span></label>
+							</div>
+							<div class="card-selector mb-0 text-white">
+								<input type="radio" name="excard" id="c2" value="2" /><label
+									for="c2">Master Card <span>xxxx 5623</span></label>
+							</div>
+						</div>
+						<h4 class="pb-10">Or Add New Card</h4>
+						<div class="sub-fieldset border border-dark">
+							<div class="form__row">
+								<input type="text" name="CName" value=""
+									class="form__input required border-bottom"
+									placeholder="Cardholder Name" />
+							</div>
+							<div class="form__row">
+								<input type="text" name="CNumber" value=""
+									class="form__input required border-bottom"
+									placeholder="Cardholder Number" />
+							</div>
+							<div class="form__row d-flex align-items-center justify-space">
+								<input type="date" name="date" value=""
+									class="form__input form__input--23 required border-bottom"
+									placeholder="Exp Date" /> <input type="text" name="cvc"
+									value=""
+									class="form__input form__input--23 required border-bottom ms-3"
+									placeholder="CVC" />
+							</div>
+							<div class="form__row mb-0">
+								<div class="checkbox-simple">
+									<input type="checkbox" name="savecard" id="sc" value="savecard" /><label
+										for="sc">Save Credit Card</span></label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-success btn-lg"
+						onclick="transferSol()">TRANSFER SOLANA</button>
+					<button type="button" class="btn btn-success btn-lg"
+						onclick="connectWallet()">CONNECT</button>
+				</div>
+			</div>
+		</div>
+		<!-- PAGE END -->
+
+
+		<script src="/assets/js/solana.js" type="text/javascript"></script>
+	</main>
+</body>
+</html>
