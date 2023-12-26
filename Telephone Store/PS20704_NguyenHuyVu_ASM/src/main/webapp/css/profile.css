@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    padding-top: 40px;
+    color: #2e323c;
+    background: rgb(255, 255, 255);
+    position: relative;
+    height: 100%;
+}
+.account-settings .user-profile {
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+.account-settings .user-profile .product-avatar {
+    margin: 0 0 1rem 0;
+}
+.account-settings .user-profile .product-avatar img {
+    width: 160px;
+    height: 160px;
+    
+    
+}
+.account-settings .user-profile .user-avatar {
+    margin: 0 0 1rem 0;
+}
+.account-settings .user-profile .user-avatar img {
+    width: 160px;
+    height: 160px;
+
+
+}
+.account-settings .user-profile h5.user-name {
+    margin: 0 0 0.5rem 0;
+}
+.account-settings .user-profile h6.user-email {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+   
+}
+.account-settings .about {
+    margin: 2rem 0 0 0;
+    text-align: center;
+}
+.account-settings .about h5 {
+    margin: 0 0 15px 0;
+    color: #007ae1;
+}
+.account-settings .about p {
+    font-size: 0.825rem;
+}
+
+
+.card {
+    background: #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 1rem;
+}
+hr {
+	height: 5px;
+	border-width: 100%;
+	background: linear-gradient(to right, #ffeb3b, #ff00e0);
+	color: blue;      
+	animation: rotate 1.5s linear infinite;
+}
+.profile{
+	height: 500px;
+	
+}

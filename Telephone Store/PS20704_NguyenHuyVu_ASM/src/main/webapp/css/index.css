@@ -1,0 +1,30 @@
+body {
+	position: relative;
+
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	background-position: center;
+} 
+
+.row>article {
+	min-height: 800px;
+	max-height: 2800px;
+}
+
+.row>aside {
+	min-height: 300px;
+}
+
+footer {
+	min-height: 200px;
+	max-height: 8000px;
+}
+
+hr {
+	height: 5px;
+	border-width: 100%;
+	background: linear-gradient(to right, #14ffe9, #ffeb3b, #ff00e0);
+	color: blue;      
+	animation: rotate 1.5s linear infinite;
+}
